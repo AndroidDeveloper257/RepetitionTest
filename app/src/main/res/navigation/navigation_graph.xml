@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/signUpFragment">
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.repetitiontest.fragments.sign_up.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.repetitiontest.fragments.sign_in.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" />
+    <fragment
+        android:id="@+id/emterPasswordFragment"
+        android:name="com.example.repetitiontest.fragments.enter_password.EmterPasswordFragment"
+        android:label="fragment_emter_password"
+        tools:layout="@layout/fragment_emter_password" />
+    <fragment
+        android:id="@+id/enterPersonalDataFragment"
+        android:name="com.example.repetitiontest.fragments.enter_personal_data.EnterPersonalDataFragment"
+        android:label="fragment_enter_personal_data"
+        tools:layout="@layout/fragment_enter_personal_data" />
+    <fragment
+        android:id="@+id/enterPhoneNumberFragment"
+        android:name="com.example.repetitiontest.fragments.enter_phone_number.EnterPhoneNumberFragment"
+        android:label="fragment_enter_phone_number"
+        tools:layout="@layout/fragment_enter_phone_number" />
+    <fragment
+        android:id="@+id/verifyPasswordFragment"
+        android:name="com.example.repetitiontest.fragments.verify_password.VerifyPasswordFragment"
+        android:label="fragment_verify_password"
+        tools:layout="@layout/fragment_verify_password" />
+    <fragment
+        android:id="@+id/verifyPhoneFragment"
+        android:name="com.example.repetitiontest.fragments.verify_phone.VerifyPhoneFragment"
+        android:label="fragment_verify_phone"
+        tools:layout="@layout/fragment_verify_phone" />
+</navigation>
