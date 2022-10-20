@@ -10,7 +10,7 @@ import com.example.repetitiontest.databinding.FragmentSignInBinding
 
 class SignInFragment : Fragment() {
 
-    private lateinit var binding: FragmentSignInBinding
+    private var binding: FragmentSignInBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,10 +18,15 @@ class SignInFragment : Fragment() {
     ): View? {
         binding = FragmentSignInBinding.inflate(layoutInflater)
 
-        return binding.root
+        return binding?.root
     }
 
     companion object {
         private const val TAG = "SignInFragment"
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

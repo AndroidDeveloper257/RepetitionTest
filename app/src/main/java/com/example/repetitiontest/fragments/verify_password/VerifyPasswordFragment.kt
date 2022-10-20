@@ -11,25 +11,22 @@ import com.example.repetitiontest.databinding.FragmentVerifyPasswordBinding
 
 class VerifyPasswordFragment : Fragment() {
 
-    private lateinit var binding: FragmentVerifyPasswordBinding
+    private var binding: FragmentVerifyPasswordBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentVerifyPasswordBinding.inflate(layoutInflater)
-        Toast.makeText(requireContext(), "Verify password page", Toast.LENGTH_SHORT).show()
-        return binding.root
+        return binding?.root
     }
 
     companion object {
+        private const val TAG = "VerifyPasswordFragment"
+    }
 
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            VerifyPasswordFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

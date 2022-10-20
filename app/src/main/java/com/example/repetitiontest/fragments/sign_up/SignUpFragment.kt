@@ -12,15 +12,15 @@ import com.example.repetitiontest.databinding.FragmentSignUpBinding
 
 class SignUpFragment : Fragment() {
 
-    private lateinit var binding: FragmentSignUpBinding
+    private var binding: FragmentSignUpBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSignUpBinding.inflate(layoutInflater)
-        binding.submitNumber.setOnClickListener {
-            val phoneNumber = binding.phoneNumberEt.text.toString()
+        binding?.submitNumber?.setOnClickListener {
+            val phoneNumber = binding?.phoneNumberEt?.text.toString()
             if (isValid(phoneNumber)) {
                 val navOptions: NavOptions = NavOptions.Builder()
                     .setEnterAnim(R.anim.enter)
@@ -31,10 +31,9 @@ class SignUpFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putString("phone_number", phoneNumber)
                 findNavController().navigate(R.id.verifyPhoneFragment, bundle, navOptions)
-
             }
         }
-        return binding.root
+        return binding?.root
     }
 
     private fun isValid(phoneNumber: String): Boolean {
@@ -45,5 +44,10 @@ class SignUpFragment : Fragment() {
     companion object {
         private const val TAG = "SignUpFragment"
         private lateinit var pageList: ArrayList<String>
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

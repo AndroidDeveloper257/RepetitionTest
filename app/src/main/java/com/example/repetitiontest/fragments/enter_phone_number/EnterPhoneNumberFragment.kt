@@ -11,7 +11,7 @@ import com.example.repetitiontest.databinding.FragmentEnterPhoneNumberBinding
 
 class EnterPhoneNumberFragment : Fragment() {
 
-    private lateinit var binding: FragmentEnterPhoneNumberBinding
+    private var binding: FragmentEnterPhoneNumberBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,7 +19,7 @@ class EnterPhoneNumberFragment : Fragment() {
     ): View? {
         binding = FragmentEnterPhoneNumberBinding.inflate(layoutInflater)
         Toast.makeText(requireContext(), "Enter phone number page", Toast.LENGTH_SHORT).show()
-        return binding.root
+        return binding?.root
     }
 
     companion object {
@@ -31,5 +31,10 @@ class EnterPhoneNumberFragment : Fragment() {
 
                 }
             }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }
