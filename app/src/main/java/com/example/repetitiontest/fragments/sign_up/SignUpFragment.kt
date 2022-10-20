@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -31,6 +32,9 @@ class SignUpFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putString("phone_number", phoneNumber)
                 findNavController().navigate(R.id.verifyPhoneFragment, bundle, navOptions)
+            } else {
+                // TODO: phone number is wrong
+                Toast.makeText(requireContext(), "Phone number is wrong", Toast.LENGTH_SHORT).show()
             }
         }
         return binding?.root
