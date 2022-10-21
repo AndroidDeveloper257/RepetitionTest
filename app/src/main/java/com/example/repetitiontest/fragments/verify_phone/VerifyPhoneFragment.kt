@@ -1,6 +1,8 @@
 package com.example.repetitiontest.fragments.verify_phone
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,6 +28,8 @@ class VerifyPhoneFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private var storedVerificationId: String? = null
     private var resendToken: PhoneAuthProvider.ForceResendingToken? = null
+    private var handler = Handler()
+    private var time = 60
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +64,23 @@ class VerifyPhoneFragment : Fragment() {
             .setCallbacks(callbacks)
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
+        binding?.progress?.visibility = View.VISIBLE
+    }
+
+    private val runnable = object : Runnable {
+        override fun run() {
+            if (time == 0) {
+                Toast.makeText(requireContext(), "time is up", Toast.LENGTH_SHORT).show()
+            } else time--
+            updateTimer()
+            handler = Handler(Looper.getMainLooper())
+            handler.postDelayed(this, 1000)
+        }
+
+    }
+
+    private fun updateTimer() {
+        binding?.timerTv?.text = time.toString()
     }
 
     private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -78,7 +99,12 @@ class VerifyPhoneFragment : Fragment() {
         ) {
             super.onCodeSent(verificationId, token)
             Log.d(TAG, "onCodeSent: $verificationId")
-
+            binding?.progress?.visibility = View.GONE
+            Toast.makeText(
+                requireContext(),
+                "Verification code send to $phoneNumber",
+                Toast.LENGTH_SHORT
+            ).show()
             storedVerificationId = verificationId
             resendToken = token
         }
