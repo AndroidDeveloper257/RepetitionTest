@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.repetitiontest.R
+import com.example.repetitiontest.const_values.BundleKeys
 import com.example.repetitiontest.databinding.FragmentSignUpBinding
 
 class SignUpFragment : Fragment() {
@@ -30,7 +31,7 @@ class SignUpFragment : Fragment() {
                     .setPopExitAnim(R.anim.pop_exit)
                     .build()
                 val bundle = Bundle()
-                bundle.putString("phone_number", phoneNumber)
+                bundle.putString(BundleKeys.PHONE_NUMBER, phoneNumber)
                 findNavController().navigate(R.id.verifyPhoneFragment, bundle, navOptions)
             } else {
                 // TODO: phone number is wrong

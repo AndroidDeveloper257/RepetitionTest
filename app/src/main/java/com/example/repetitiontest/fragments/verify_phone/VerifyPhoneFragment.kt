@@ -10,6 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
+import com.example.repetitiontest.R
+import com.example.repetitiontest.const_values.BundleKeys
 import com.example.repetitiontest.databinding.FragmentVerifyPhoneBinding
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -36,7 +40,7 @@ class VerifyPhoneFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentVerifyPhoneBinding.inflate(layoutInflater)
-        val s = arguments?.getString("phone_number")
+        val s = arguments?.getString(BundleKeys.PHONE_NUMBER)
         if (s != null) {
             phoneNumber = s
         }
@@ -47,7 +51,8 @@ class VerifyPhoneFragment : Fragment() {
             val code = it.toString()
             Log.d(TAG, "onCreateView: $code")
             if (code.length == 6) {
-                val credential = PhoneAuthProvider.getCredential(storedVerificationId.toString(), code)
+                val credential =
+                    PhoneAuthProvider.getCredential(storedVerificationId.toString(), code)
                 signInWithPhoneAuthCredential(credential)
             }
         }
@@ -116,6 +121,7 @@ class VerifyPhoneFragment : Fragment() {
                 if (task.isSuccessful) {
                     Log.d(TAG, "signInWithPhoneAuthCredential: succcess")
                     Toast.makeText(requireContext(), "Success", Toast.LENGTH_SHORT).show()
+                    openNextPage()
                 } else {
                     Log.e(TAG, "signInWithPhoneAuthCredential: ${task.exception?.message}")
                     if (task.exception is FirebaseAuthInvalidCredentialsException) {
@@ -124,6 +130,18 @@ class VerifyPhoneFragment : Fragment() {
                     binding?.codeEt?.setText("")
                 }
             }
+    }
+
+    private fun openNextPage() {
+        val navOptions: NavOptions = NavOptions.Builder()
+            .setEnterAnim(R.anim.enter)
+            .setExitAnim(R.anim.exit)
+            .setPopEnterAnim(R.anim.pop_enter)
+            .setPopExitAnim(R.anim.pop_exit)
+            .build()
+        val bundle = Bundle()
+        bundle.putString(BundleKeys.PHONE_NUMBER, phoneNumber)
+        findNavController().navigate(R.id.enterPasswordFragment, bundle, navOptions)
     }
 
     companion object {

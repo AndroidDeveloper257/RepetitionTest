@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">RepetitionTest</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="strong_password_requirements">Password must have at least 8 characters, included uppercase, lowercase and numbers</string>
 </resources>
