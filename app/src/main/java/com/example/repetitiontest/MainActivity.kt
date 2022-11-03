@@ -3,6 +3,7 @@ package com.example.repetitiontest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.navigation.findNavController
 import com.example.repetitiontest.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

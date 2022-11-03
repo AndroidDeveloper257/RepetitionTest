@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_50sdp"
-        android:hint="Phone number"
+        android:hint="@string/phone_number"
         android:inputType="phone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
-        android:text="Submit number"
+        android:text="@string/submit_number"
         android:textSize="@dimen/_8sdp"
         app:layout_constraintRight_toRightOf="@id/phone_number_et"
         app:layout_constraintTop_toBottomOf="@id/phone_number_et" />

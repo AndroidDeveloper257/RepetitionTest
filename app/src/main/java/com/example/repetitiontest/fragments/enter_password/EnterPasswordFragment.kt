@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import com.example.repetitiontest.R
 import com.example.repetitiontest.const_values.BundleKeys
 import com.example.repetitiontest.databinding.FragmentEnterPasswordBinding
@@ -36,41 +37,40 @@ class EnterPasswordFragment : Fragment() {
 
     private fun saveClicked() {
         if (!isPasswordConfirmed()) {
-            binding?.passwordEt?.isErrorEnabled = false
-            binding?.confirmPasswordEt?.isErrorEnabled = true
-            binding?.confirmPasswordEt?.error = "Please confirm password"
+            binding?.password?.isErrorEnabled = false
+            binding?.confirmPassword?.isErrorEnabled = true
+            binding?.confirmPassword?.error = "Please confirm password"
             return
         } else {
-            binding?.confirmPasswordEt?.isErrorEnabled = false
+            binding?.confirmPassword?.isErrorEnabled = false
         }
 
         if (!isPasswordStrong()) {
-            binding?.passwordEt?.isErrorEnabled = true
-            binding?.passwordEt?.error = requireContext().getString(R.string.strong_password_requirements)
+            binding?.password?.isErrorEnabled = true
+            binding?.password?.error = requireContext().getString(R.string.strong_password_requirements)
             return
         } else {
-            binding?.passwordEt?.isErrorEnabled = false
+            binding?.password?.isErrorEnabled = false
         }
 
         openNextPage()
     }
 
     private fun openNextPage() {
-        Toast.makeText(requireContext(), "Now next page will open", Toast.LENGTH_SHORT).show()
-//        val bundle = Bundle()
-//        bundle.putString(BundleKeys.PHONE_NUMBER, phoneNumber)
-//        bundle.putString(BundleKeys.PASSWORD, password)
-//        val navOptions: NavOptions = NavOptions.Builder()
-//            .setEnterAnim(R.anim.enter)
-//            .setExitAnim(R.anim.exit)
-//            .setPopEnterAnim(R.anim.pop_enter)
-//            .setPopExitAnim(R.anim.pop_exit)
-//            .build()
-//        findNavController().navigate(R.id.enterPersonalDataFragment, bundle, navOptions)
+        val bundle = Bundle()
+        bundle.putString(BundleKeys.PHONE_NUMBER, phoneNumber)
+        bundle.putString(BundleKeys.PASSWORD, password)
+        val navOptions: NavOptions = NavOptions.Builder()
+            .setEnterAnim(R.anim.enter)
+            .setExitAnim(R.anim.exit)
+            .setPopEnterAnim(R.anim.pop_enter)
+            .setPopExitAnim(R.anim.pop_exit)
+            .build()
+        findNavController().navigate(R.id.enterPersonalDataFragment, bundle, navOptions)
     }
 
     private fun isPasswordStrong(): Boolean {
-        password = binding?.passwordEt?.editText?.text.toString()
+        password = binding?.password?.editText?.text.toString()
         if (password.length < 8) {
             return false
         }
@@ -80,13 +80,13 @@ class EnterPasswordFragment : Fragment() {
         for (c in password) {
             if (Character.isUpperCase(c)) upperCase = true
             if (Character.isLowerCase(c)) lowerCase = true
-            if (c.digitToInt() in 0..9) numbers = true
+            if (c.toInt() in 48..57) numbers = true
         }
         return numbers && upperCase && lowerCase
     }
 
     private fun isPasswordConfirmed(): Boolean {
-        return binding?.confirmPasswordEt?.editText?.text.toString() == binding?.passwordEt?.editText?.text.toString()
+        return binding?.confirmPassword?.editText?.text.toString() == binding?.password?.editText?.text.toString()
     }
 
     companion object {
