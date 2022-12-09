@@ -1,27 +1,28 @@
-package com.example.repetitiontest.fragments.sign_up
+package com.example.repetitiontest.fragments.registration.enter_phone_number
 
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.repetitiontest.R
-import com.example.repetitiontest.databinding.FragmentSignUpBinding
+import com.example.repetitiontest.databinding.FragmentEnterPhoneNumberBinding
 
-class SignUpFragment : Fragment() {
+class EnterPhoneNumberFragment : Fragment() {
 
-    private var binding: FragmentSignUpBinding? = null
+    private var _binding: FragmentEnterPhoneNumberBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSignUpBinding.inflate(layoutInflater)
-        binding?.submitNumber?.setOnClickListener {
-            val phoneNumber = binding?.phoneNumberEt?.text.toString()
+        _binding = FragmentEnterPhoneNumberBinding.inflate(layoutInflater)
+        binding.submitNumber.setOnClickListener {
+            val phoneNumber = binding.phoneNumberEt.text.toString()
             if (isValid(phoneNumber)) {
                 val navOptions: NavOptions = NavOptions.Builder()
                     .setEnterAnim(R.anim.enter)
@@ -37,7 +38,7 @@ class SignUpFragment : Fragment() {
                 Toast.makeText(requireContext(), "Phone number is wrong", Toast.LENGTH_SHORT).show()
             }
         }
-        return binding?.root
+        return binding.root
     }
 
     private fun isValid(phoneNumber: String): Boolean {
@@ -46,12 +47,18 @@ class SignUpFragment : Fragment() {
     }
 
     companion object {
-        private const val TAG = "SignUpFragment"
-        private lateinit var pageList: ArrayList<String>
+        private const val TAG = "EnterPhoneNumberFragmen"
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            EnterPhoneNumberFragment().apply {
+                arguments = Bundle().apply {
+
+                }
+            }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 }

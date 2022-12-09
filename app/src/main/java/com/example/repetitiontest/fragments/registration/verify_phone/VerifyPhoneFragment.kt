@@ -1,4 +1,4 @@
-package com.example.repetitiontest.fragments.enter_personal_data
+package com.example.repetitiontest.fragments.registration.verify_phone
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,28 +6,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.repetitiontest.R
-import com.example.repetitiontest.databinding.FragmentEnterPersonalDataBinding
 import com.example.repetitiontest.databinding.FragmentVerifyPhoneBinding
 
-class EnterPersonalDataFragment : Fragment() {
+class VerifyPhoneFragment : Fragment() {
 
-    private var binding: FragmentEnterPersonalDataBinding? = null
+    private var _binding: FragmentVerifyPhoneBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentEnterPersonalDataBinding.inflate(layoutInflater)
+    ): View {
+        _binding = FragmentVerifyPhoneBinding.inflate(layoutInflater)
 
-        return binding?.root
+        return binding.root
     }
 
     companion object {
-        private const val TAG = "EnterPersonalDataFragme"
+        private const val TAG = "VerifyPhoneFragment"
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding?.root
+        _binding = null
     }
 }

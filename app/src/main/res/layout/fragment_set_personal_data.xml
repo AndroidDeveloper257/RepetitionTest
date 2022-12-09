@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.registration.verify_phone.VerifyPhoneFragment">
+    tools:context=".fragments.registration.set_personal_data.SetPersonalDataFragment">
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
