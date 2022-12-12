@@ -18,12 +18,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/submit_number"
+        android:id="@+id/submit_number_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_10sdp"
         android:text="Submit number"
         android:textSize="@dimen/_8sdp"
+        app:layout_constraintLeft_toLeftOf="@id/phone_number_et"
         app:layout_constraintRight_toRightOf="@id/phone_number_et"
         app:layout_constraintTop_toBottomOf="@id/phone_number_et" />
 

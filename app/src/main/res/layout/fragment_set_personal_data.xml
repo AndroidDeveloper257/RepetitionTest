@@ -3,7 +3,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.registration.set_personal_data.SetPersonalDataFragment">
 
+    <EditText
+        android:layout_width="match_parent"
+        android:inputType="text"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="@dimen/_10sdp"
+        android:id="@+id/first_name_et"
+        android:hint="First name"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:inputType="text"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/first_name_et"
+        app:layout_constraintLeft_toLeftOf="@id/first_name_et"
+        app:layout_constraintRight_toRightOf="@id/first_name_et"
+        android:layout_margin="@dimen/_10sdp"
+        android:id="@+id/last_name_et"
+        android:hint="Last name"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        app:layout_constraintTop_toBottomOf="@id/last_name_et"
+        app:layout_constraintLeft_toLeftOf="@id/last_name_et"
+        app:layout_constraintRight_toRightOf="@id/last_name_et"
+        android:layout_margin="@dimen/_10sdp"
+        android:id="@+id/email"
+        android:hint="Email(optional)"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,7 @@
     app:startDestination="@id/enterPhoneNumberFragment">
 
     <fragment
-        android:id="@+id/enterPersonalDataFragment"
+        android:id="@+id/setPersonalDataFragment"
         android:name="com.example.repetitiontest.fragments.registration.set_personal_data.SetPersonalDataFragment"
         android:label="fragment_enter_personal_data"
         tools:layout="@layout/fragment_set_personal_data" />
@@ -25,4 +25,9 @@
         android:name="com.example.repetitiontest.fragments.registration.verify_phone.VerifyPhoneFragment"
         android:label="fragment_verify_phone"
         tools:layout="@layout/fragment_verify_phone" />
+    <fragment
+        android:id="@+id/setPasswordFragment"
+        android:name="com.example.repetitiontest.fragments.registration.set_password.SetPasswordFragment"
+        android:label="fragment_set_password"
+        tools:layout="@layout/fragment_set_password" />
 </navigation>

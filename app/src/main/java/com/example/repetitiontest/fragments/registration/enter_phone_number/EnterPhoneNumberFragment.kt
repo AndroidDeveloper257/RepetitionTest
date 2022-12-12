@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.repetitiontest.R
+import com.example.repetitiontest.const_values.BundleKeys
 import com.example.repetitiontest.databinding.FragmentEnterPhoneNumberBinding
 
 class EnterPhoneNumberFragment : Fragment() {
@@ -21,7 +22,7 @@ class EnterPhoneNumberFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentEnterPhoneNumberBinding.inflate(layoutInflater)
-        binding.submitNumber.setOnClickListener {
+        binding.submitNumberBtn.setOnClickListener {
             val phoneNumber = binding.phoneNumberEt.text.toString()
             if (isValid(phoneNumber)) {
                 val navOptions: NavOptions = NavOptions.Builder()
@@ -31,7 +32,7 @@ class EnterPhoneNumberFragment : Fragment() {
                     .setPopExitAnim(R.anim.pop_exit)
                     .build()
                 val bundle = Bundle()
-                bundle.putString("phone_number", phoneNumber)
+                bundle.putString(BundleKeys.PHONE_NUMBER, phoneNumber)
                 findNavController().navigate(R.id.verifyPhoneFragment, bundle, navOptions)
             } else {
                 // TODO: phone number is wrong
