@@ -49,8 +49,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // navigation component
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 
     // intuit ssp sdp
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
@@ -63,4 +63,7 @@ dependencies {
 
     // solution from stackoverflow
     implementation "androidx.browser:browser:1.3.0"
+
+    // dots indicator for intro
+    implementation "com.tbuonomo:dotsindicator:4.3"
 }
