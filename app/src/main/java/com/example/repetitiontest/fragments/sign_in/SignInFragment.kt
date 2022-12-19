@@ -48,10 +48,16 @@ class SignInFragment : Fragment() {
         binding.signInBtn.setOnClickListener {
             if (state == 1) {
                 useFirebase()
+            } else {
+                checkPassword()
             }
         }
 
         return binding.root
+    }
+
+    private fun checkPassword() {
+
     }
 
     private fun useFirebase() {
@@ -81,6 +87,7 @@ class SignInFragment : Fragment() {
                                 userEntity = value
                                 alertDialog.dismiss()
                                 state = 2
+                                stateTwoMode()
                             }
                         }
                     }
@@ -112,6 +119,12 @@ class SignInFragment : Fragment() {
             }
 
         })
+    }
+
+    private fun stateTwoMode() {
+        binding.passwordEt.visibility = View.VISIBLE
+        binding.passwordEye.visibility = View.VISIBLE
+        binding.imageLayout2.visibility = View.VISIBLE
     }
 
     override fun onDestroy() {
