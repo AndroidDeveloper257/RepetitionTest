@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "users_table")
-data class User(
+data class UserEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: Long,
@@ -15,10 +15,16 @@ data class User(
     val lastName: String,
     @ColumnInfo(name = "phone_number")
     val phoneNumber: String,
+    @ColumnInfo(name = "email")
+    val email: String? = null,
     @ColumnInfo(name = "language")
-    val language: Int,
+    val language: Int? = null,
     @ColumnInfo(name = "balance")
-    val balance: Int,
+    val balance: Int? = null,
     @ColumnInfo(name = "invited_user")
-    val invitedUser: String
+    val invitedUser: Long? = null,
+    @ColumnInfo(name = "profile_photo_url")
+    val profilePhotoUrl: String? = null,
+    @ColumnInfo(name = "user_role")
+    val userRole: Int? = null
 )
