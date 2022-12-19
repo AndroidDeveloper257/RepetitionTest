@@ -9,7 +9,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
+import com.example.repetitiontest.R
 import com.example.repetitiontest.const_values.BundleKeys
 import com.example.repetitiontest.const_values.FirebaseKeys
 import com.example.repetitiontest.database.UserEntity
@@ -58,7 +61,6 @@ class SignInFragment : Fragment() {
         alertDialog.setView(dialogBinding.root)
         alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         alertDialog.show()
-        var found = false
         firebaseDatabase = FirebaseDatabase.getInstance()
         reference = firebaseDatabase.getReference(FirebaseKeys.USERS)
         reference.addValueEventListener(object : ValueEventListener {
@@ -72,7 +74,10 @@ class SignInFragment : Fragment() {
                                  * this number has been registered on firebase
                                  * should sign in
                                  */
-                                Log.d(TAG,"onDataChange: this number has been registered on firebase")
+                                Log.d(
+                                    TAG,
+                                    "onDataChange: this number has been registered on firebase"
+                                )
                                 userEntity = value
                                 alertDialog.dismiss()
                                 state = 2
@@ -80,6 +85,7 @@ class SignInFragment : Fragment() {
                         }
                     }
                 } else {
+                    alertDialog.dismiss()
                     /**
                      * firebase is empty for now
                      * should sign up
@@ -87,12 +93,22 @@ class SignInFragment : Fragment() {
                     Log.d(TAG, "onDataChange: firebase is empty for now, user should sign up")
                     val bundle = Bundle()
                     bundle.putString(BundleKeys.PHONE_NUMBER, phoneNumber)
-
+                    val navOptions: NavOptions = NavOptions.Builder()
+                        .setEnterAnim(R.anim.enter)
+                        .setExitAnim(R.anim.exit)
+                        .setPopEnterAnim(R.anim.pop_enter)
+                        .setPopExitAnim(R.anim.pop_exit)
+                        .build()
+                    findNavController().navigate(R.id.signUpFragment, bundle, navOptions)
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-
+                Log.e(TAG, "onCancelled: something went wrong")
+                Log.e(TAG, "onCancelled: ${error.message}")
+                Log.e(TAG, "onCancelled: ${error.toException().message}")
+                Log.e(TAG, "onCancelled: ${error.toException().printStackTrace()}")
+                Toast.makeText(requireContext(), "something went wrong", Toast.LENGTH_SHORT).show()
             }
 
         })
