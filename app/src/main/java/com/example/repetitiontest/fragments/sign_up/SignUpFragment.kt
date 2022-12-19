@@ -17,6 +17,7 @@ class SignUpFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var isPasswordVisible = true
+    private var isCodeConfirmed = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,24 +26,53 @@ class SignUpFragment : Fragment() {
         _binding = FragmentSignUpBinding.inflate(layoutInflater)
         binding.passwordEt.transformationMethod = HideReturnsTransformationMethod.getInstance()
 
-        binding.eye.setOnClickListener {
+        binding.confirmBtn.setOnClickListener {
+
+        }
+
+        binding.passwordEye.setOnClickListener {
             if (isPasswordVisible) {
                 /**
                  * make invisible
                  */
-                binding.eye.setImageResource(R.drawable.password_invisible)
+                binding.passwordEye.setImageResource(R.drawable.password_invisible)
                 binding.passwordEt.transformationMethod = PasswordTransformationMethod.getInstance()
+                binding.passwordEt.setSelection(binding.passwordEt.text.toString().length)
             } else {
                 /**
                  * make visible
                  */
-                binding.eye.setImageResource(R.drawable.password_visible)
-                binding.passwordEt.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                binding.passwordEye.setImageResource(R.drawable.password_visible)
+                binding.passwordEt.transformationMethod =
+                    HideReturnsTransformationMethod.getInstance()
             }
             isPasswordVisible = !isPasswordVisible
+            binding.passwordEt.setSelection(binding.passwordEt.text.toString().length)
         }
 
         return binding.root
+    }
+
+    private fun codeVerificationMode() {
+        binding.image1.setImageResource(R.drawable.sms_code_icon)
+        binding.verificationCodeEt.visibility = View.VISIBLE
+
+        binding.passwordEt.visibility = View.GONE
+        binding.passwordEye.visibility = View.GONE
+        binding.imageLayout2.visibility = View.GONE
+        binding.confirmPasswordEt.visibility = View.GONE
+        binding.confirmPasswordEye.visibility = View.GONE
+    }
+
+    private fun setPasswordMode() {
+        binding.image1.setImageResource(R.drawable.password_icon)
+        binding.verificationCodeEt.visibility = View.INVISIBLE
+
+        binding.passwordEt.visibility = View.VISIBLE
+        binding.passwordEye.visibility = View.VISIBLE
+        binding.imageLayout2.visibility = View.VISIBLE
+        binding.confirmPasswordEt.visibility = View.VISIBLE
+        binding.confirmPasswordEye.visibility = View.VISIBLE
     }
 
     override fun onDestroy() {

@@ -20,4 +20,7 @@
     <string name="motivation_text">Achieve your dream\nwith us :)</string>
     <string name="sms_code_hint">SMS code</string>
 
+    <!--    for sign in page-->
+    <string name="please_wait_phone_number_is_checking">Iltimos kutib turing\nTelefon raqam tekshirilyapti</string>
+
 </resources>

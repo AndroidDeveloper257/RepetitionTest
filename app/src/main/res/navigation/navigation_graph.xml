@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/signUpFragment">
+    app:startDestination="@id/introFragment">
 
     <fragment
         android:id="@+id/introFragment"
@@ -15,4 +15,9 @@
         android:name="com.example.repetitiontest.fragments.sign_up.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.repetitiontest.fragments.sign_in.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" />
 </navigation>

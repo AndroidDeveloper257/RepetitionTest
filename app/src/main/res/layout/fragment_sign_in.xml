@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.sign_up.SignUpFragment">
+    tools:context=".fragments.sign_in.SignInFragment">
 
     <View
         android:id="@+id/circle_view"
@@ -45,28 +45,54 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_1" />
 
+    <!--    phone number field-->
+    <!--    start-->
+
     <EditText
         android:id="@+id/verification_code_et"
         android:layout_width="0dp"
         android:layout_height="@dimen/_30sdp"
         android:layout_marginTop="@dimen/_20sdp"
         android:background="@drawable/edit_text_background"
-        android:hint="@string/sms_code_hint"
-        android:inputType="numberDecimal"
+        android:hint="@string/phone_number"
+        android:inputType="phone"
         android:paddingStart="@dimen/_25sdp"
         android:paddingTop="@dimen/_5sdp"
         android:paddingBottom="@dimen/_5sdp"
         android:textColorHint="@color/hint_color"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintLeft_toLeftOf="@id/guideline"
-        app:layout_constraintRight_toRightOf="@id/confirm_btn"
+        app:layout_constraintRight_toRightOf="@id/sign_in_btn"
         app:layout_constraintTop_toBottomOf="@id/title_2" />
+
+    <LinearLayout
+        android:id="@+id/image_layout_1"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_35sdp"
+        android:background="@drawable/icons_background"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/verification_code_et"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintLeft_toLeftOf="@id/sign_in_btn"
+        app:layout_constraintTop_toTopOf="@id/verification_code_et">
+
+        <ImageView
+            android:id="@+id/image_1"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/sms_code_icon" />
+
+    </LinearLayout>
+
+    <!--    end-->
+
+    <!--    password field-->
+    <!--    start-->
 
     <EditText
         android:id="@+id/password_et"
         android:layout_width="0dp"
         android:layout_height="@dimen/_30sdp"
-        android:layout_marginTop="@dimen/_20sdp"
         android:background="@drawable/edit_text_background"
         android:hint="@string/password"
         android:inputType="textPassword"
@@ -77,9 +103,10 @@
         android:textColorHint="@color/hint_color"
         android:textSize="@dimen/_12ssp"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/image_layout_2"
         app:layout_constraintLeft_toLeftOf="@id/guideline"
-        app:layout_constraintRight_toRightOf="@id/confirm_btn"
-        app:layout_constraintTop_toBottomOf="@id/title_2" />
+        app:layout_constraintRight_toRightOf="@id/sign_in_btn"
+        app:layout_constraintTop_toTopOf="@id/image_layout_2" />
 
     <ImageView
         android:id="@+id/password_eye"
@@ -93,55 +120,6 @@
         app:layout_constraintTop_toTopOf="@id/password_et" />
 
     <LinearLayout
-        android:id="@+id/image_layout_1"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_35sdp"
-        android:background="@drawable/icons_background"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@id/verification_code_et"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintLeft_toLeftOf="@id/confirm_btn"
-        app:layout_constraintTop_toTopOf="@id/verification_code_et">
-
-        <ImageView
-            android:id="@+id/image_1"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:src="@drawable/sms_code_icon" />
-
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/confirm_password_et"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_30sdp"
-        android:background="@drawable/edit_text_background"
-        android:hint="@string/confirm_password"
-        android:inputType="textPassword"
-        android:paddingStart="@dimen/_25sdp"
-        android:paddingTop="@dimen/_5sdp"
-        android:paddingEnd="@dimen/_5sdp"
-        android:paddingBottom="@dimen/_5sdp"
-        android:textColorHint="@color/hint_color"
-        android:textSize="@dimen/_12ssp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/image_layout_2"
-        app:layout_constraintLeft_toLeftOf="@id/guideline"
-        app:layout_constraintRight_toRightOf="@id/confirm_btn"
-        app:layout_constraintTop_toTopOf="@id/image_layout_2" />
-
-    <ImageView
-        android:id="@+id/confirm_password_eye"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_5sdp"
-        android:src="@drawable/password_visible"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/confirm_password_et"
-        app:layout_constraintRight_toRightOf="@id/confirm_password_et"
-        app:layout_constraintTop_toTopOf="@id/confirm_password_et" />
-
-    <LinearLayout
         android:id="@+id/image_layout_2"
         android:layout_width="0dp"
         android:layout_height="@dimen/_35sdp"
@@ -150,7 +128,7 @@
         android:gravity="center"
         android:visibility="gone"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintLeft_toLeftOf="@id/confirm_btn"
+        app:layout_constraintLeft_toLeftOf="@id/sign_in_btn"
         app:layout_constraintTop_toBottomOf="@id/image_layout_1">
 
         <ImageView
@@ -161,6 +139,8 @@
 
     </LinearLayout>
 
+    <!--    end-->
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
@@ -169,7 +149,7 @@
         app:layout_constraintGuide_percent="0.22" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/confirm_btn"
+        android:id="@+id/sign_in_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_50sdp"
@@ -177,7 +157,7 @@
         android:layout_marginBottom="@dimen/_30sdp"
         android:background="@drawable/button_background"
         android:fontFamily="@font/inter_regular"
-        android:text="@string/confirm_sms_code"
+        android:text="@string/common_signin_button_text"
         android:textAllCaps="false"
         android:textColor="@color/blue"
         app:layout_constraintBottom_toBottomOf="parent"

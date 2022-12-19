@@ -39,7 +39,6 @@ class IntroFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentIntroBinding.inflate(layoutInflater)
-        checkDatabase()
         generatePages()
         adapter = IntroPageAdapter(
             this,
@@ -70,13 +69,8 @@ class IntroFragment : Fragment() {
         return binding.root
     }
 
-    private fun checkDatabase() {
-        database = AppDatabase.getInstance(requireContext())
-        databaseUsers = ArrayList(database.userDao().getDatabaseUsers())
-        if (databaseUsers.isEmpty()) {
-//            findNavController().
-        }
-
+    private fun loadFromFireBase() {
+        firebaseUsers = ArrayList()
         firebaseDatabase = FirebaseDatabase.getInstance()
         reference = firebaseDatabase.getReference(USERS)
         reference
@@ -89,20 +83,59 @@ class IntroFragment : Fragment() {
                         Log.d(TAG, "onDataChange: users exist")
                         snapshot.children.forEach {
                             val value = it.getValue(UserEntity::class.java)
-
+                            if (value != null) {
+                                firebaseUsers.add(value)
+                            }
                         }
+                        Log.d(TAG, "onDataChange: ${firebaseUsers.size} users found")
+                    } else {
+                        /**
+                         * firebase realtime database is empty
+                         */
+                        Log.d(TAG, "onDataChange: firebase realtime database is empty")
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-
+                    Log.e(TAG, "onCancelled: something went wrong")
+                    Log.e(TAG, "onCancelled: ${error.message}")
+                    Log.e(TAG, "onCancelled: ${error.toException().message}")
+                    Log.e(TAG, "onCancelled: ${error.toException().printStackTrace()}")
                 }
 
             })
     }
 
-    private fun openNextPage() {
+    private fun checkDatabase(): Boolean {
+        /**
+         * returns true for sign in page
+         * returns false for main page
+         */
+        database = AppDatabase.getInstance(requireContext())
+        databaseUsers = ArrayList(database.userDao().getDatabaseUsers())
+        return if (databaseUsers.isEmpty()) {
+            /**
+             * database is empty
+             * sign in or sign up
+             */
+            Log.d(TAG, "checkDatabase: database is empty sign in or sign up")
+            true
+        } else {
+            /**
+             * main pagega o'tadi
+             */
+            false
+        }
+    }
 
+    private fun openNextPage() {
+        if (checkDatabase()) {
+            findNavController().navigate(R.id.signInFragment)
+        } else {
+            /**
+             * main page
+             */
+        }
     }
 
     private fun generatePages() {
