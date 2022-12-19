@@ -13,7 +13,11 @@
     <!--    for intro page-->
     <string name="continue_intro">Continue</string>
     <string name="end_intro">Let\'s start</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--    for sign up page-->
+    <string name="confirm_sms_code">Confirmation</string>
+    <string name="repetition_text">REPETITSION TEST</string>
+    <string name="motivation_text">Achieve your dream\nwith us :)</string>
+    <string name="sms_code_hint">SMS code</string>
 
 </resources>

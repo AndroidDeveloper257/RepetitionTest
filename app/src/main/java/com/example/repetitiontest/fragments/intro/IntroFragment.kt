@@ -2,17 +2,21 @@ package com.example.repetitiontest.fragments.intro
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.repetitiontest.R
 import com.example.repetitiontest.adapters.IntroPageAdapter
+import com.example.repetitiontest.const_values.FirebaseKeys.USERS
+import com.example.repetitiontest.database.AppDatabase
+import com.example.repetitiontest.database.UserEntity
 import com.example.repetitiontest.databinding.FragmentIntroBinding
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 class IntroFragment : Fragment() {
 
@@ -24,6 +28,10 @@ class IntroFragment : Fragment() {
 
     private lateinit var reference: DatabaseReference
     private lateinit var firebaseDatabase: FirebaseDatabase
+    private lateinit var database: AppDatabase
+
+    private lateinit var databaseUsers: ArrayList<UserEntity>
+    private lateinit var firebaseUsers: ArrayList<UserEntity>
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreateView(
@@ -31,7 +39,7 @@ class IntroFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentIntroBinding.inflate(layoutInflater)
-
+        checkDatabase()
         generatePages()
         adapter = IntroPageAdapter(
             this,
@@ -60,6 +68,37 @@ class IntroFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    private fun checkDatabase() {
+        database = AppDatabase.getInstance(requireContext())
+        databaseUsers = ArrayList(database.userDao().getDatabaseUsers())
+        if (databaseUsers.isEmpty()) {
+//            findNavController().
+        }
+
+        firebaseDatabase = FirebaseDatabase.getInstance()
+        reference = firebaseDatabase.getReference(USERS)
+        reference
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        /**
+                         * users exist
+                         */
+                        Log.d(TAG, "onDataChange: users exist")
+                        snapshot.children.forEach {
+                            val value = it.getValue(UserEntity::class.java)
+
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
     }
 
     private fun openNextPage() {
