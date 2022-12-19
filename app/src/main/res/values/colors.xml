@@ -11,8 +11,12 @@
     <color name="yellow">#F8AF2F</color>
     <color name="blue">#2A293E</color>
 
+    <color name="edit_text">#E2E6EC</color>
+
     <!--    for intro-->
     <color name="selected_dot_color">#2A293E</color>
     <color name="unselected_dot_color">#BBC3CD</color>
+
+    <color name="hint_color">#BBC3CD</color>
 
 </resources>

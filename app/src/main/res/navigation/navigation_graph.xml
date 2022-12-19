@@ -6,33 +6,18 @@
     app:startDestination="@id/introFragment">
 
     <fragment
-        android:id="@+id/setPersonalDataFragment"
-        android:name="com.example.repetitiontest.fragments.registration.set_personal_data.SetPersonalDataFragment"
-        android:label="fragment_enter_personal_data"
-        tools:layout="@layout/fragment_set_personal_data" />
-    <fragment
-        android:id="@+id/enterPhoneNumberFragment"
-        android:name="com.example.repetitiontest.fragments.registration.enter_phone_number.EnterPhoneNumberFragment"
-        android:label="fragment_enter_phone_number"
-        tools:layout="@layout/fragment_enter_phone_number" />
-    <fragment
-        android:id="@+id/verifyPasswordFragment"
-        android:name="com.example.repetitiontest.fragments.registration.verify_password.VerifyPasswordFragment"
-        android:label="fragment_verify_password"
-        tools:layout="@layout/fragment_verify_password" />
-    <fragment
-        android:id="@+id/verifyPhoneFragment"
-        android:name="com.example.repetitiontest.fragments.registration.verify_phone.VerifyPhoneFragment"
-        android:label="fragment_verify_phone"
-        tools:layout="@layout/fragment_verify_phone" />
-    <fragment
-        android:id="@+id/setPasswordFragment"
-        android:name="com.example.repetitiontest.fragments.registration.set_password.SetPasswordFragment"
-        android:label="fragment_set_password"
-        tools:layout="@layout/fragment_set_password" />
-    <fragment
         android:id="@+id/introFragment"
         android:name="com.example.repetitiontest.fragments.intro.IntroFragment"
         android:label="fragment_intro"
         tools:layout="@layout/fragment_intro" />
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.repetitiontest.fragments.sign_up.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.repetitiontest.fragments.sign_in.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" />
 </navigation>

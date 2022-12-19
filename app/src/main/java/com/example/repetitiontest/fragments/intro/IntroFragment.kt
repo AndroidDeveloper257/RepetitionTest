@@ -2,17 +2,21 @@ package com.example.repetitiontest.fragments.intro
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.repetitiontest.R
 import com.example.repetitiontest.adapters.IntroPageAdapter
+import com.example.repetitiontest.const_values.FirebaseKeys.USERS
+import com.example.repetitiontest.database.AppDatabase
+import com.example.repetitiontest.database.UserEntity
 import com.example.repetitiontest.databinding.FragmentIntroBinding
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 class IntroFragment : Fragment() {
 
@@ -24,6 +28,10 @@ class IntroFragment : Fragment() {
 
     private lateinit var reference: DatabaseReference
     private lateinit var firebaseDatabase: FirebaseDatabase
+    private lateinit var database: AppDatabase
+
+    private lateinit var databaseUsers: ArrayList<UserEntity>
+    private lateinit var firebaseUsers: ArrayList<UserEntity>
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreateView(
@@ -31,7 +39,6 @@ class IntroFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentIntroBinding.inflate(layoutInflater)
-
         generatePages()
         adapter = IntroPageAdapter(
             this,
@@ -62,8 +69,73 @@ class IntroFragment : Fragment() {
         return binding.root
     }
 
-    private fun openNextPage() {
+    private fun loadFromFireBase() {
+        firebaseUsers = ArrayList()
+        firebaseDatabase = FirebaseDatabase.getInstance()
+        reference = firebaseDatabase.getReference(USERS)
+        reference
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        /**
+                         * users exist
+                         */
+                        Log.d(TAG, "onDataChange: users exist")
+                        snapshot.children.forEach {
+                            val value = it.getValue(UserEntity::class.java)
+                            if (value != null) {
+                                firebaseUsers.add(value)
+                            }
+                        }
+                        Log.d(TAG, "onDataChange: ${firebaseUsers.size} users found")
+                    } else {
+                        /**
+                         * firebase realtime database is empty
+                         */
+                        Log.d(TAG, "onDataChange: firebase realtime database is empty")
+                    }
+                }
 
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e(TAG, "onCancelled: something went wrong")
+                    Log.e(TAG, "onCancelled: ${error.message}")
+                    Log.e(TAG, "onCancelled: ${error.toException().message}")
+                    Log.e(TAG, "onCancelled: ${error.toException().printStackTrace()}")
+                }
+
+            })
+    }
+
+    private fun checkDatabase(): Boolean {
+        /**
+         * returns true for sign in page
+         * returns false for main page
+         */
+        database = AppDatabase.getInstance(requireContext())
+        databaseUsers = ArrayList(database.userDao().getDatabaseUsers())
+        return if (databaseUsers.isEmpty()) {
+            /**
+             * database is empty
+             * sign in or sign up
+             */
+            Log.d(TAG, "checkDatabase: database is empty sign in or sign up")
+            true
+        } else {
+            /**
+             * main pagega o'tadi
+             */
+            false
+        }
+    }
+
+    private fun openNextPage() {
+        if (checkDatabase()) {
+            findNavController().navigate(R.id.signInFragment)
+        } else {
+            /**
+             * main page
+             */
+        }
     }
 
     private fun generatePages() {
