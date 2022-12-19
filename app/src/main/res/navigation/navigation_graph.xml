@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/enterPhoneNumberFragment">
+    app:startDestination="@id/introFragment">
 
     <fragment
         android:id="@+id/setPersonalDataFragment"
@@ -30,4 +30,9 @@
         android:name="com.example.repetitiontest.fragments.registration.set_password.SetPasswordFragment"
         android:label="fragment_set_password"
         tools:layout="@layout/fragment_set_password" />
+    <fragment
+        android:id="@+id/introFragment"
+        android:name="com.example.repetitiontest.fragments.intro.IntroFragment"
+        android:label="fragment_intro"
+        tools:layout="@layout/fragment_intro" />
 </navigation>
