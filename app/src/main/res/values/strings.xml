@@ -22,12 +22,12 @@
 
     <!--    for sign in page-->
     <string name="please_wait_phone_number_is_checking">Iltimos kuting\nTelefon raqam tekshirilyapti</string>
+    <string name="please_wait_account_is_creating">Iltimos kuting\nAkkount yaratilyapti</string>
     <string name="verification_code_sent_1">Tasdiqlash kodi </string>
     <string name="verification_code_sent_2"> raqamiga yuborildi</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="full_name">Full name</string>
     <string name="email">Email(optional)</string>
     <string name="role">Teacher, pupil, enrollee</string>
+    <string name="forget_password">Forget password</string>
 
 </resources>

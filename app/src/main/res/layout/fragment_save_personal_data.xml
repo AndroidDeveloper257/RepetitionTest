@@ -143,7 +143,10 @@
         android:layout_height="@dimen/_30sdp"
         android:layout_marginEnd="@dimen/_50sdp"
         android:background="@drawable/edit_text_background"
+        android:clickable="false"
         android:editable="false"
+        android:enabled="false"
+        android:focusable="false"
         android:hint="@string/email"
         android:inputType="none"
         android:paddingStart="@dimen/_25sdp"
@@ -156,6 +159,16 @@
         app:layout_constraintLeft_toLeftOf="@id/guideline"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/image_layout_2" />
+
+    <LinearLayout
+        android:id="@+id/email_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/email_et"
+        app:layout_constraintLeft_toRightOf="@id/image_layout_2"
+        app:layout_constraintRight_toRightOf="@id/email_et"
+        app:layout_constraintTop_toTopOf="@id/email_et" />
 
     <LinearLayout
         android:id="@+id/image_layout_2"
@@ -181,27 +194,30 @@
     <!--    role field-->
     <!--    start-->
 
-    <EditText
+    <LinearLayout
         android:id="@+id/role_field"
         android:layout_width="0dp"
         android:layout_height="@dimen/_30sdp"
         android:layout_marginEnd="@dimen/_50sdp"
         android:background="@drawable/edit_text_background"
-        android:editable="false"
-        android:ellipsize="end"
-        android:hint="@string/role"
-        android:inputType="none"
-        android:maxLines="1"
+        android:orientation="horizontal"
         android:paddingStart="@dimen/_25sdp"
         android:paddingTop="@dimen/_5sdp"
-        android:paddingEnd="@dimen/_50sdp"
         android:paddingBottom="@dimen/_5sdp"
         android:textColorHint="@color/hint_color"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintBottom_toBottomOf="@id/image_layout_3"
         app:layout_constraintLeft_toLeftOf="@id/guideline"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/image_layout_3" />
+        app:layout_constraintTop_toTopOf="@id/image_layout_3">
+
+        <Spinner
+            android:id="@+id/role_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/image_layout_3"

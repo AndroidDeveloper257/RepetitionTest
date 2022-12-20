@@ -14,8 +14,9 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.repetitiontest.R
 import com.example.repetitiontest.const_values.BundleKeys
-import com.example.repetitiontest.database.UserEntity
+import com.example.repetitiontest.database.users.UserEntity
 import com.example.repetitiontest.databinding.FragmentSignUpBinding
+import com.example.repetitiontest.helper_functions.makeupPhoneNumber
 import com.example.repetitiontest.helper_functions.showToast
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -33,18 +34,19 @@ class SignUpFragment : Fragment() {
     private var isPasswordVisible = true
     private var isConfirmPasswordVisible = true
     private var user: UserEntity? = null
-    private var phoneNumber: String? = null
 
     private lateinit var auth: FirebaseAuth
     private var storedVerificationId: String? = null
     private var resendingToken: PhoneAuthProvider.ForceResendingToken? = null
 
-    private var isPhoneVerified = true
+    private var isPhoneVerified = false
 
     private var time = 120
     private var handler = Handler()
 
     private var code: String? = null
+
+    private var roomFirebaseStatus: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,10 +57,13 @@ class SignUpFragment : Fragment() {
         binding.confirmPasswordEt.transformationMethod =
             HideReturnsTransformationMethod.getInstance()
         user = arguments?.getParcelable(BundleKeys.USER)
-        phoneNumber = user?.phoneNumber
-//        sendVerificationCode()
+        roomFirebaseStatus = arguments?.getInt(BundleKeys.ROOM_FIREBASE_STATUS, 0)
+
+        sendVerificationCode()
+        val makeupPhoneNumber = makeupPhoneNumber(user?.phoneNumber)
+
         binding.codeSentTv.text =
-            "${getString(R.string.verification_code_sent_1)} $phoneNumber ${getString(R.string.verification_code_sent_2)}"
+            "${getString(R.string.verification_code_sent_1)} $makeupPhoneNumber ${getString(R.string.verification_code_sent_2)}"
 
         binding.confirmBtn.setOnClickListener {
             if (!isPhoneVerified) {
@@ -152,13 +157,14 @@ class SignUpFragment : Fragment() {
 
     private fun checkCode() {
         code = binding.verificationCodeEt.text.toString()
-//        if (code!!.length == 6) {
-//            val credential = PhoneAuthProvider.getCredential(
-//                storedVerificationId ?: "", code.toString()
-//            )
-//            signInWithCredential(credential)
-//        }
-        setPasswordMode()
+        if (code!!.length == 6) {
+            val credential = PhoneAuthProvider.getCredential(
+                storedVerificationId ?: "", code.toString()
+            )
+            signInWithCredential(credential)
+        } else {
+            showToast(requireContext(), "Kod 6 xonali son bo'lishi kerak")
+        }
     }
 
     private fun signInWithCredential(credential: PhoneAuthCredential) {
@@ -181,7 +187,7 @@ class SignUpFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         val options = PhoneAuthOptions
             .Builder(auth)
-            .setPhoneNumber(phoneNumber.toString())
+            .setPhoneNumber(user?.phoneNumber.toString())
             .setTimeout(60L, TimeUnit.SECONDS)
             .setActivity(requireActivity())
             .setCallbacks(callbacks)
@@ -193,7 +199,7 @@ class SignUpFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         val options = resendingToken?.let {
             PhoneAuthOptions.newBuilder(auth)
-                .setPhoneNumber(phoneNumber.toString())       // Phone number to verify
+                .setPhoneNumber(user?.phoneNumber.toString())       // Phone number to verify
                 .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
                 .setActivity(requireActivity())                 // Activity (for callback binding)
                 .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
@@ -220,6 +226,8 @@ class SignUpFragment : Fragment() {
             verificationId: String,
             token: PhoneAuthProvider.ForceResendingToken
         ) {
+            storedVerificationId = verificationId
+            resendingToken = token
             Log.d(TAG, "onCodeSent: verificationId -> $verificationId")
             Log.d(TAG, "onCodeSent: token -> $token")
             showToast(requireContext(), "Kod jo'natildi")
@@ -249,7 +257,7 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun codeVerificationMode() {
+//    private fun codeVerificationMode() {
 //        binding.image1.setImageResource(R.drawable.sms_code_icon)
 //        binding.verificationCodeEt.visibility = View.VISIBLE
 
@@ -258,7 +266,7 @@ class SignUpFragment : Fragment() {
 //        binding.imageLayout2.visibility = View.GONE
 //        binding.confirmPasswordEt.visibility = View.GONE
 //        binding.confirmPasswordEye.visibility = View.GONE
-    }
+//    }
 
     private fun setPasswordMode() {
         binding.image1.setImageResource(R.drawable.password_icon)

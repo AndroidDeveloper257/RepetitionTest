@@ -12,9 +12,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.repetitiontest.R
 import com.example.repetitiontest.adapters.IntroPageAdapter
+import com.example.repetitiontest.const_values.BundleKeys
 import com.example.repetitiontest.const_values.FirebaseKeys.USERS
-import com.example.repetitiontest.database.UserEntity
+import com.example.repetitiontest.const_values.RoomFirebaseStatus
+import com.example.repetitiontest.database.AppDatabase
+import com.example.repetitiontest.database.users.UserEntity
 import com.example.repetitiontest.databinding.FragmentIntroBinding
+import com.example.repetitiontest.helper_functions.showToast
 import com.google.firebase.database.*
 
 class IntroFragment : Fragment() {
@@ -27,8 +31,9 @@ class IntroFragment : Fragment() {
 
     private lateinit var reference: DatabaseReference
     private lateinit var firebaseDatabase: FirebaseDatabase
+    private lateinit var database: AppDatabase
 
-    private lateinit var firebaseUsers: ArrayList<UserEntity>
+    private var databaseUser: UserEntity? = null
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreateView(
@@ -43,6 +48,8 @@ class IntroFragment : Fragment() {
         )
         binding.viewPager.adapter = adapter
         binding.indicator.attachTo(binding.viewPager)
+
+        openNextPage()
 
         binding.continueBtn.setOnClickListener {
             if (binding.viewPager.currentItem == pageList.size - 1) {
@@ -67,12 +74,12 @@ class IntroFragment : Fragment() {
     }
 
     private fun loadFromFireBase() {
-        firebaseUsers = ArrayList()
         firebaseDatabase = FirebaseDatabase.getInstance()
         reference = firebaseDatabase.getReference(USERS)
         reference
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
+                    var found = false
                     if (snapshot.exists()) {
                         /**
                          * users exist
@@ -81,15 +88,48 @@ class IntroFragment : Fragment() {
                         snapshot.children.forEach {
                             val value = it.getValue(UserEntity::class.java)
                             if (value != null) {
-                                firebaseUsers.add(value)
+                                if (value.phoneNumber == databaseUser?.phoneNumber) {
+                                    /**
+                                     * room ✅
+                                     * firebase ✅
+                                     * open main page
+                                     */
+                                    found = true
+                                    Log.d(
+                                        TAG,
+                                        "onDataChange: $databaseUser found on firebase realtime database"
+                                    )
+                                }
                             }
                         }
-                        Log.d(TAG, "onDataChange: ${firebaseUsers.size} users found")
                     } else {
                         /**
-                         * firebase realtime database is empty
+                         * room ✅
+                         * firebase ❌
+                         * open sign up page
                          */
                         Log.d(TAG, "onDataChange: firebase realtime database is empty")
+                    }
+
+
+                    val bundle = Bundle()
+                    bundle.putParcelable(BundleKeys.USER, databaseUser)
+                    if (found) {
+                        /**
+                         * main page
+                         */
+                        findNavController().navigate(R.id.homeFragment, bundle)
+                    } else {
+                        /**
+                         * room ✅
+                         * firebase ❌
+                         * sign up for this number
+                         */
+                        bundle.putInt(
+                            BundleKeys.ROOM_FIREBASE_STATUS,
+                            RoomFirebaseStatus.ROOM_OK_FIREBASE_NO
+                        )
+                        findNavController().navigate(R.id.signUpFragment, bundle)
                     }
                 }
 
@@ -103,41 +143,52 @@ class IntroFragment : Fragment() {
             })
     }
 
-    private fun checkDatabase(): Boolean {
+    private fun isDatabaseEmpty(): Boolean {
         /**
          * returns true for sign in page if database is empty
          * returns false for main page if database is not empty
          */
-//        database = AppDatabase.getInstance(requireContext())
-//        databaseUsers = ArrayList(database.userDao().getDatabaseUsers())
-//        return if (databaseUsers.isEmpty()) {
+        database = AppDatabase.getInstance(requireContext())
+        val databaseUsers = ArrayList(database.userDao().getDatabaseUsers())
+        try {
+            databaseUser = databaseUsers[0]
+        } catch (e: java.lang.Exception) {
+            Log.e(TAG, "isDatabaseEmpty: database is empty")
+        }
+        return if (databaseUsers.isEmpty()) {
             /**
              * database is empty
-             * sign in or sign up
+             * open sign in page
              */
-//            Log.d(TAG, "checkDatabase: database is empty sign in or sign up")
-//            true
-//        } else {
+            Log.d(TAG, "checkDatabase: database is empty, now sign in page will open")
+            true
+        } else {
             /**
-             * main pagega o'tadi
+             * database is not empty
+             * check firebase
+             * roomdagi userni firebasedayam bor yo'qligini tekshiramiz
+             * bor bo'sa main page
+             * aks holda sign up for this number
              */
-//            false
-//        }
-        return true
-        // TODO: uncomment above after got ready entity classap
+            false
+        }
     }
 
     private fun openNextPage() {
-//        if (checkDatabase()) {
-//            findNavController().navigate(R.id.signInFragment)
-//        } else {
-//            /**
-//             * check firebase
-//             * if phone number is still in firebase -> main page
-//             * else -> sign up
-//             */
-//        }
-        findNavController().navigate(R.id.signInFragment)
+        if (isDatabaseEmpty()) {
+            if (binding.viewPager.currentItem == pageList.size - 1) {
+                /**
+                 * room ❌
+                 */
+                findNavController().navigate(R.id.signInFragment)
+            }
+        } else {
+            showToast(requireContext(), "database is not empty")
+            /**
+             * room ✅
+             */
+            loadFromFireBase()
+        }
     }
 
     private fun generatePages() {

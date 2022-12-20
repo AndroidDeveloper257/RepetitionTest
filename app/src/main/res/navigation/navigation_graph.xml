@@ -25,4 +25,24 @@
         android:name="com.example.repetitiontest.fragments.sign_up.SavePersonalDataFragment"
         android:label="fragment_save_personal_data"
         tools:layout="@layout/fragment_save_personal_data" />
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.example.repetitiontest.fragments.main_page.history.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.repetitiontest.fragments.main_page.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/testExecuteFragment"
+        android:name="com.example.repetitiontest.fragments.main_page.test_execute.TestExecuteFragment"
+        android:label="fragment_test_execute"
+        tools:layout="@layout/fragment_test_execute" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.repetitiontest.fragments.main_page.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

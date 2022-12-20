@@ -1,4 +1,4 @@
-package com.example.repetitiontest.database
+package com.example.repetitiontest.database.users
 
 import androidx.room.Dao
 import androidx.room.Delete

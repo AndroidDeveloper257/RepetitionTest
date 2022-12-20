@@ -1,4 +1,4 @@
-package com.example.repetitiontest.database
+package com.example.repetitiontest.database.users
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -11,10 +11,8 @@ data class UserEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
     var id: Long? = null,
-    @ColumnInfo(name = "first_name")
-    var firstName: String? = null,
-    @ColumnInfo(name = "last_name")
-    var lastName: String? = null,
+    @ColumnInfo(name = "full_name")
+    var fullName: String? = null,
     @ColumnInfo(name = "phone_number")
     var phoneNumber: String? = null,
     @ColumnInfo(name = "email")
@@ -38,7 +36,6 @@ data class UserEntity(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString(),
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Long::class.java.classLoader) as? Long,
@@ -49,8 +46,7 @@ data class UserEntity(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(id)
-        parcel.writeString(firstName)
-        parcel.writeString(lastName)
+        parcel.writeString(fullName)
         parcel.writeString(phoneNumber)
         parcel.writeString(email)
         parcel.writeString(password)
