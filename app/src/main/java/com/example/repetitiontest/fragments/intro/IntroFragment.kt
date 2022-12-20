@@ -13,7 +13,6 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.repetitiontest.R
 import com.example.repetitiontest.adapters.IntroPageAdapter
 import com.example.repetitiontest.const_values.FirebaseKeys.USERS
-import com.example.repetitiontest.database.AppDatabase
 import com.example.repetitiontest.database.UserEntity
 import com.example.repetitiontest.databinding.FragmentIntroBinding
 import com.google.firebase.database.*
@@ -28,9 +27,7 @@ class IntroFragment : Fragment() {
 
     private lateinit var reference: DatabaseReference
     private lateinit var firebaseDatabase: FirebaseDatabase
-    private lateinit var database: AppDatabase
 
-    private lateinit var databaseUsers: ArrayList<UserEntity>
     private lateinit var firebaseUsers: ArrayList<UserEntity>
 
     @RequiresApi(Build.VERSION_CODES.P)
@@ -108,34 +105,39 @@ class IntroFragment : Fragment() {
 
     private fun checkDatabase(): Boolean {
         /**
-         * returns true for sign in page
-         * returns false for main page
+         * returns true for sign in page if database is empty
+         * returns false for main page if database is not empty
          */
-        database = AppDatabase.getInstance(requireContext())
-        databaseUsers = ArrayList(database.userDao().getDatabaseUsers())
-        return if (databaseUsers.isEmpty()) {
+//        database = AppDatabase.getInstance(requireContext())
+//        databaseUsers = ArrayList(database.userDao().getDatabaseUsers())
+//        return if (databaseUsers.isEmpty()) {
             /**
              * database is empty
              * sign in or sign up
              */
-            Log.d(TAG, "checkDatabase: database is empty sign in or sign up")
-            true
-        } else {
+//            Log.d(TAG, "checkDatabase: database is empty sign in or sign up")
+//            true
+//        } else {
             /**
              * main pagega o'tadi
              */
-            false
-        }
+//            false
+//        }
+        return true
+        // TODO: uncomment above after got ready entity classap
     }
 
     private fun openNextPage() {
-        if (checkDatabase()) {
-            findNavController().navigate(R.id.signInFragment)
-        } else {
-            /**
-             * main page
-             */
-        }
+//        if (checkDatabase()) {
+//            findNavController().navigate(R.id.signInFragment)
+//        } else {
+//            /**
+//             * check firebase
+//             * if phone number is still in firebase -> main page
+//             * else -> sign up
+//             */
+//        }
+        findNavController().navigate(R.id.signInFragment)
     }
 
     private fun generatePages() {

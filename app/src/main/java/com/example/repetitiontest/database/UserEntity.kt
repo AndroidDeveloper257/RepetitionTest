@@ -1,5 +1,7 @@
 package com.example.repetitiontest.database
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -8,23 +10,68 @@ import androidx.room.PrimaryKey
 data class UserEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: Long,
+    var id: Long? = null,
     @ColumnInfo(name = "first_name")
-    val firstName: String,
+    var firstName: String? = null,
     @ColumnInfo(name = "last_name")
-    val lastName: String,
+    var lastName: String? = null,
     @ColumnInfo(name = "phone_number")
-    val phoneNumber: String,
+    var phoneNumber: String? = null,
     @ColumnInfo(name = "email")
-    val email: String? = null,
+    var email: String? = null,
+    @ColumnInfo(name = "password")
+    var password: String? = null,
     @ColumnInfo(name = "language")
-    val language: Int? = null,
+    var language: Int? = 0,
     @ColumnInfo(name = "balance")
-    val balance: Int? = null,
+    var balance: Int? = null,
     @ColumnInfo(name = "invited_user")
-    val invitedUser: Long? = null,
+    var invitedUser: Long? = null,
     @ColumnInfo(name = "profile_photo_url")
-    val profilePhotoUrl: String? = null,
+    var profilePhotoUrl: String? = null,
     @ColumnInfo(name = "user_role")
-    val userRole: Int? = null
-)
+    var userRole: Int? = 0
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readValue(Long::class.java.classLoader) as? Long,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Long::class.java.classLoader) as? Long,
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeValue(id)
+        parcel.writeString(firstName)
+        parcel.writeString(lastName)
+        parcel.writeString(phoneNumber)
+        parcel.writeString(email)
+        parcel.writeString(password)
+        parcel.writeValue(language)
+        parcel.writeValue(balance)
+        parcel.writeValue(invitedUser)
+        parcel.writeString(profilePhotoUrl)
+        parcel.writeValue(userRole)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<UserEntity> {
+        override fun createFromParcel(parcel: Parcel): UserEntity {
+            return UserEntity(parcel)
+        }
+
+        override fun newArray(size: Int): Array<UserEntity?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

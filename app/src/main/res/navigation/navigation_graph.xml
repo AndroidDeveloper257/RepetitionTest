@@ -20,4 +20,9 @@
         android:name="com.example.repetitiontest.fragments.sign_in.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" />
+    <fragment
+        android:id="@+id/savePersonalDataFragment"
+        android:name="com.example.repetitiontest.fragments.sign_up.SavePersonalDataFragment"
+        android:label="fragment_save_personal_data"
+        tools:layout="@layout/fragment_save_personal_data" />
 </navigation>

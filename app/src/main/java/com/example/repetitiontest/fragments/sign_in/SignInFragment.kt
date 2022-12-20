@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +20,7 @@ import com.example.repetitiontest.const_values.FirebaseKeys
 import com.example.repetitiontest.database.UserEntity
 import com.example.repetitiontest.databinding.CustomLoadingDialogBinding
 import com.example.repetitiontest.databinding.FragmentSignInBinding
+import com.example.repetitiontest.helper_functions.phoneNumberToId
 import com.google.firebase.database.*
 
 class SignInFragment : Fragment() {
@@ -33,6 +36,7 @@ class SignInFragment : Fragment() {
     private var state = 1
 
     private var userEntity: UserEntity? = null
+    private var isPasswordVisible = true
 
     /**
      * state = 1 if phone number entering
@@ -53,11 +57,32 @@ class SignInFragment : Fragment() {
             }
         }
 
+        binding.passwordEye.setOnClickListener {
+            if (isPasswordVisible) {
+                /**
+                 * make invisible
+                 */
+                binding.passwordEye.setImageResource(R.drawable.password_invisible)
+                binding.passwordEt.transformationMethod = PasswordTransformationMethod.getInstance()
+            } else {
+                /**
+                 * make visible
+                 */
+                binding.passwordEye.setImageResource(R.drawable.password_visible)
+                binding.passwordEt.transformationMethod =
+                    HideReturnsTransformationMethod.getInstance()
+            }
+            isPasswordVisible = !isPasswordVisible
+            binding.passwordEt.setSelection(binding.passwordEt.text.toString().length)
+        }
+
         return binding.root
     }
 
     private fun checkPassword() {
-
+        if (userEntity?.password == binding.passwordEt.text.toString()) {
+            // TODO: sign in page is still not ready
+        }
     }
 
     private fun useFirebase() {
@@ -98,8 +123,13 @@ class SignInFragment : Fragment() {
                      * should sign up
                      */
                     Log.d(TAG, "onDataChange: firebase is empty for now, user should sign up")
+                    phoneNumber = binding.phoneNumberEt.text.toString()
                     val bundle = Bundle()
-                    bundle.putString(BundleKeys.PHONE_NUMBER, phoneNumber)
+                    val user = UserEntity(
+                        phoneNumberToId(phoneNumber),
+                        phoneNumber = phoneNumber
+                    )
+                    bundle.putParcelable(BundleKeys.USER, user)
                     val navOptions: NavOptions = NavOptions.Builder()
                         .setEnterAnim(R.anim.enter)
                         .setExitAnim(R.anim.exit)
@@ -125,6 +155,7 @@ class SignInFragment : Fragment() {
         binding.passwordEt.visibility = View.VISIBLE
         binding.passwordEye.visibility = View.VISIBLE
         binding.imageLayout2.visibility = View.VISIBLE
+
     }
 
     override fun onDestroy() {
