@@ -163,11 +163,12 @@ class SignInFragment : Fragment() {
                          */
                         Log.d(TAG, "onDataChange: firebase is empty for now, user should sign up")
                         val bundle = Bundle()
-                        userEntity = UserEntity(
-                            phoneNumberToId(userEntity.phoneNumber),
-                            phoneNumber = userEntity.phoneNumber
+                        val user = UserEntity(
+                            phoneNumberToId(binding.phoneNumberEt.text.toString()),
+                            phoneNumber = binding.phoneNumberEt.text.toString()
                         )
-                        bundle.putParcelable(BundleKeys.USER, userEntity)
+                        userEntity = user
+                        bundle.putParcelable(BundleKeys.USER, user)
                         val navOptions: NavOptions = NavOptions.Builder()
                             .setEnterAnim(R.anim.enter)
                             .setExitAnim(R.anim.exit)
