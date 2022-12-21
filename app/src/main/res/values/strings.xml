@@ -30,4 +30,10 @@
     <string name="role">Teacher, pupil, enrollee</string>
     <string name="forget_password">Forget password</string>
 
+    <!--    for main page-->
+    <string name="home">Asosiy</string>
+    <string name="test">Test</string>
+    <string name="history">Tarix</string>
+    <string name="settings">Sozlamalar</string>
+
 </resources>

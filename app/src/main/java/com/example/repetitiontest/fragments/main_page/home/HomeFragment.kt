@@ -46,13 +46,6 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        val bottomNavigationView =
-            requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view)
-        bottomNavigationView.visibility = View.VISIBLE
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

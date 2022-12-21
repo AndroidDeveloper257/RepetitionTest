@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:id="@+id/homeFragment"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/home" />
+        <item
+            android:id="@+id/testExecuteFragment"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/test" />
+        <item
+            android:id="@+id/historyFragment"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/history" />
+        <item
+            android:id="@+id/settingsFragment"
+            android:icon="@mipmap/ic_launcher"
+            android:title="@string/settings" />
+    </group>
+
+</menu>
