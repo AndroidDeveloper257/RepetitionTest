@@ -21,8 +21,6 @@ class SettingsFragment : Fragment() {
     ): View {
         _binding = FragmentSettingsBinding.inflate(layoutInflater)
 
-        showToast(requireContext(), TAG)
-
         return binding.root
     }
 

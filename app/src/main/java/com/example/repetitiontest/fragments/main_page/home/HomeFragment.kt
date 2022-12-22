@@ -36,16 +36,12 @@ class HomeFragment : Fragment() {
 
         }
 
-        showToast(requireContext(), TAG)
-
         val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 exitProcess(1)
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-
-        showToast(requireContext(), "Welcome ${userEntity.fullName}")
 
         return binding.root
     }

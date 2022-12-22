@@ -35,6 +35,8 @@ class SignInFragment : Fragment() {
     private lateinit var reference: DatabaseReference
     private lateinit var firebaseDatabase: FirebaseDatabase
 
+    private lateinit var appDatabase: AppDatabase
+
     private var state = 1
 
     private lateinit var userEntity: UserEntity
@@ -105,6 +107,9 @@ class SignInFragment : Fragment() {
     }
 
     private fun openMainPage() {
+        appDatabase = AppDatabase.getInstance(requireContext())
+        appDatabase.userDao().addUser(userEntity)
+
         val navOptions: NavOptions = NavOptions.Builder()
             .setEnterAnim(R.anim.enter)
             .setExitAnim(R.anim.exit)

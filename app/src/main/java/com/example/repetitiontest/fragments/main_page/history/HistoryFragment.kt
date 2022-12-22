@@ -21,8 +21,6 @@ class HistoryFragment : Fragment() {
     ): View {
         _binding = FragmentHistoryBinding.inflate(layoutInflater)
 
-        showToast(requireContext(), TAG)
-
         return binding.root
     }
 

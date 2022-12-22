@@ -20,8 +20,6 @@ class TestExecuteFragment : Fragment() {
     ): View {
         _binding = FragmentTestExecuteBinding.inflate(layoutInflater)
 
-        showToast(requireContext(), TAG)
-
         return binding.root
     }
 
