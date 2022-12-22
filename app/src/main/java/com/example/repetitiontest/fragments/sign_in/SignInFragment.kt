@@ -167,7 +167,11 @@ class SignInFragment : Fragment() {
                             phoneNumberToId(binding.phoneNumberEt.text.toString()),
                             phoneNumber = binding.phoneNumberEt.text.toString()
                         )
-                        userEntity = user
+//                        userEntity = user
+                        userEntity = UserEntity(
+                            phoneNumberToId(binding.phoneNumberEt.text.toString()),
+                            phoneNumber = binding.phoneNumberEt.text.toString()
+                        )
                         bundle.putParcelable(BundleKeys.USER, user)
                         val navOptions: NavOptions = NavOptions.Builder()
                             .setEnterAnim(R.anim.enter)

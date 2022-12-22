@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.repetitiontest.R
 import com.example.repetitiontest.databinding.FragmentSettingsBinding
+import com.example.repetitiontest.fragments.main_page.test_execute.TestExecuteFragment
+import com.example.repetitiontest.helper_functions.showToast
 
 class SettingsFragment : Fragment() {
 
@@ -18,6 +20,8 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSettingsBinding.inflate(layoutInflater)
+
+        showToast(requireContext(), TAG)
 
         return binding.root
     }

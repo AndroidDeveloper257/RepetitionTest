@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.repetitiontest.R
@@ -49,11 +50,18 @@ class IntroFragment : Fragment() {
         binding.viewPager.adapter = adapter
         binding.indicator.attachTo(binding.viewPager)
 
-        openNextPage()
+//        openNextPage()
 
         binding.continueBtn.setOnClickListener {
             if (binding.viewPager.currentItem == pageList.size - 1) {
-                openNextPage()
+//                openNextPage()
+                val navOptions: NavOptions = NavOptions.Builder()
+                    .setEnterAnim(R.anim.enter)
+                    .setExitAnim(R.anim.exit)
+                    .setPopEnterAnim(R.anim.pop_enter)
+                    .setPopExitAnim(R.anim.pop_exit)
+                    .build()
+                findNavController().navigate(R.id.signInFragment, null, navOptions)
             } else {
                 binding.viewPager.setCurrentItem(binding.viewPager.currentItem + 1, true)
             }
@@ -73,123 +81,123 @@ class IntroFragment : Fragment() {
         return binding.root
     }
 
-    private fun loadFromFireBase() {
-        firebaseDatabase = FirebaseDatabase.getInstance()
-        reference = firebaseDatabase.getReference(USERS)
-        reference
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    var found = false
-                    if (snapshot.exists()) {
-                        /**
-                         * users exist
-                         */
-                        Log.d(TAG, "onDataChange: users exist")
-                        snapshot.children.forEach {
-                            val value = it.getValue(UserEntity::class.java)
-                            if (value != null) {
-                                if (value.phoneNumber == databaseUser?.phoneNumber) {
-                                    /**
-                                     * room ✅
-                                     * firebase ✅
-                                     * open main page
-                                     */
-                                    found = true
-                                    Log.d(
-                                        TAG,
-                                        "onDataChange: $databaseUser found on firebase realtime database"
-                                    )
-                                }
-                            }
-                        }
-                    } else {
-                        /**
-                         * room ✅
-                         * firebase ❌
-                         * open sign up page
-                         */
-                        Log.d(TAG, "onDataChange: firebase realtime database is empty")
-                    }
+//    private fun loadFromFireBase() {
+//        firebaseDatabase = FirebaseDatabase.getInstance()
+//        reference = firebaseDatabase.getReference(USERS)
+//        reference
+//            .addValueEventListener(object : ValueEventListener {
+//                override fun onDataChange(snapshot: DataSnapshot) {
+//                    var found = false
+//                    if (snapshot.exists()) {
+//                        /**
+//                         * users exist
+//                         */
+//                        Log.d(TAG, "onDataChange: users exist")
+//                        snapshot.children.forEach {
+//                            val value = it.getValue(UserEntity::class.java)
+//                            if (value != null) {
+//                                if (value.phoneNumber == databaseUser?.phoneNumber) {
+//                                    /**
+//                                     * room ✅
+//                                     * firebase ✅
+//                                     * open main page
+//                                     */
+//                                    found = true
+//                                    Log.d(
+//                                        TAG,
+//                                        "onDataChange: $databaseUser found on firebase realtime database"
+//                                    )
+//                                }
+//                            }
+//                        }
+//                    } else {
+//                        /**
+//                         * room ✅
+//                         * firebase ❌
+//                         * open sign up page
+//                         */
+//                        Log.d(TAG, "onDataChange: firebase realtime database is empty")
+//                    }
+//
+//
+//                    val bundle = Bundle()
+//                    bundle.putParcelable(BundleKeys.USER, databaseUser)
+//                    if (found) {
+//                        /**
+//                         * main page
+//                         */
+//                        findNavController().navigate(R.id.homeFragment, bundle)
+//                    } else {
+//                        /**
+//                         * room ✅
+//                         * firebase ❌
+//                         * sign up for this number
+//                         */
+//                        bundle.putInt(
+//                            BundleKeys.ROOM_FIREBASE_STATUS,
+//                            RoomFirebaseStatus.ROOM_OK_FIREBASE_NO
+//                        )
+//                        findNavController().navigate(R.id.signUpFragment, bundle)
+//                    }
+//                }
+//
+//                override fun onCancelled(error: DatabaseError) {
+//                    Log.e(TAG, "onCancelled: something went wrong")
+//                    Log.e(TAG, "onCancelled: ${error.message}")
+//                    Log.e(TAG, "onCancelled: ${error.toException().message}")
+//                    Log.e(TAG, "onCancelled: ${error.toException().printStackTrace()}")
+//                }
+//
+//            })
+//    }
 
+//    private fun isDatabaseEmpty(): Boolean {
+//        /**
+//         * returns true for sign in page if database is empty
+//         * returns false for main page if database is not empty
+//         */
+//        database = AppDatabase.getInstance(requireContext())
+//        val databaseUsers = ArrayList(database.userDao().getDatabaseUsers())
+//        try {
+//            databaseUser = databaseUsers[0]
+//        } catch (e: java.lang.Exception) {
+//            Log.e(TAG, "isDatabaseEmpty: database is empty")
+//        }
+//        return if (databaseUsers.isEmpty()) {
+//            /**
+//             * database is empty
+//             * open sign in page
+//             */
+//            Log.d(TAG, "checkDatabase: database is empty, now sign in page will open")
+//            true
+//        } else {
+//            /**
+//             * database is not empty
+//             * check firebase
+//             * roomdagi userni firebasedayam bor yo'qligini tekshiramiz
+//             * bor bo'sa main page
+//             * aks holda sign up for this number
+//             */
+//            false
+//        }
+//    }
 
-                    val bundle = Bundle()
-                    bundle.putParcelable(BundleKeys.USER, databaseUser)
-                    if (found) {
-                        /**
-                         * main page
-                         */
-                        findNavController().navigate(R.id.homeFragment, bundle)
-                    } else {
-                        /**
-                         * room ✅
-                         * firebase ❌
-                         * sign up for this number
-                         */
-                        bundle.putInt(
-                            BundleKeys.ROOM_FIREBASE_STATUS,
-                            RoomFirebaseStatus.ROOM_OK_FIREBASE_NO
-                        )
-                        findNavController().navigate(R.id.signUpFragment, bundle)
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e(TAG, "onCancelled: something went wrong")
-                    Log.e(TAG, "onCancelled: ${error.message}")
-                    Log.e(TAG, "onCancelled: ${error.toException().message}")
-                    Log.e(TAG, "onCancelled: ${error.toException().printStackTrace()}")
-                }
-
-            })
-    }
-
-    private fun isDatabaseEmpty(): Boolean {
-        /**
-         * returns true for sign in page if database is empty
-         * returns false for main page if database is not empty
-         */
-        database = AppDatabase.getInstance(requireContext())
-        val databaseUsers = ArrayList(database.userDao().getDatabaseUsers())
-        try {
-            databaseUser = databaseUsers[0]
-        } catch (e: java.lang.Exception) {
-            Log.e(TAG, "isDatabaseEmpty: database is empty")
-        }
-        return if (databaseUsers.isEmpty()) {
-            /**
-             * database is empty
-             * open sign in page
-             */
-            Log.d(TAG, "checkDatabase: database is empty, now sign in page will open")
-            true
-        } else {
-            /**
-             * database is not empty
-             * check firebase
-             * roomdagi userni firebasedayam bor yo'qligini tekshiramiz
-             * bor bo'sa main page
-             * aks holda sign up for this number
-             */
-            false
-        }
-    }
-
-    private fun openNextPage() {
-        if (isDatabaseEmpty()) {
-            if (binding.viewPager.currentItem == pageList.size - 1) {
-                /**
-                 * room ❌
-                 */
-                findNavController().navigate(R.id.signInFragment)
-            }
-        } else {
-            showToast(requireContext(), "database is not empty")
-            /**
-             * room ✅
-             */
-            loadFromFireBase()
-        }
-    }
+//    private fun openNextPage() {
+//        if (isDatabaseEmpty()) {
+//            if (binding.viewPager.currentItem == pageList.size - 1) {
+//                /**
+//                 * room ❌
+//                 */
+//                findNavController().navigate(R.id.signInFragment)
+//            }
+//        } else {
+//            showToast(requireContext(), "database is not empty")
+//            /**
+//             * room ✅
+//             */
+//            loadFromFireBase()
+//        }
+//    }
 
     private fun generatePages() {
         pageList = ArrayList()

@@ -11,6 +11,7 @@ import com.example.repetitiontest.const_values.BundleKeys
 import com.example.repetitiontest.database.AppDatabase
 import com.example.repetitiontest.database.users.UserEntity
 import com.example.repetitiontest.databinding.FragmentHomeBinding
+import com.example.repetitiontest.fragments.main_page.test_execute.TestExecuteFragment
 import com.example.repetitiontest.helper_functions.showToast
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -34,6 +35,9 @@ class HomeFragment : Fragment() {
         } else {
 
         }
+
+        showToast(requireContext(), TAG)
+
         val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 exitProcess(1)

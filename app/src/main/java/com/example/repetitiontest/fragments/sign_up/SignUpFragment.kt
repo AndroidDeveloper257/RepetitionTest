@@ -46,7 +46,6 @@ class SignUpFragment : Fragment() {
 
     private var code: String? = null
 
-    private var roomFirebaseStatus: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,7 +56,6 @@ class SignUpFragment : Fragment() {
         binding.confirmPasswordEt.transformationMethod =
             HideReturnsTransformationMethod.getInstance()
         user = arguments?.getParcelable(BundleKeys.USER)
-        roomFirebaseStatus = arguments?.getInt(BundleKeys.ROOM_FIREBASE_STATUS, 0)
 
         sendVerificationCode()
         val makeupPhoneNumber = makeupPhoneNumber(user?.phoneNumber)

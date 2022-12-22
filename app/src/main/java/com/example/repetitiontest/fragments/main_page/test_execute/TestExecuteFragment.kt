@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.repetitiontest.R
 import com.example.repetitiontest.databinding.FragmentTestExecuteBinding
+import com.example.repetitiontest.helper_functions.showToast
 
 class TestExecuteFragment : Fragment() {
 
@@ -18,6 +19,8 @@ class TestExecuteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentTestExecuteBinding.inflate(layoutInflater)
+
+        showToast(requireContext(), TAG)
 
         return binding.root
     }
